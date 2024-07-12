@@ -47,13 +47,13 @@ The stages are separated by the management component they interact with (Google 
 ### 01-privatecloud
 This stage contains the Terraform content to deploy a private cloud and configure the integration with Cloud Monitoring.
 
-### 02a-nsxt
+### 02a-
 This stage contains the Terraform content for a foundational NSX-T setup (segments, firewalls). This stage can be deployed in parallel with stage `02b-vcenter`.
 
-### 02b-vcenter
+### 02b-
 This stage contains the Terraform content for a foundational vCenter setup (folders, resource pools, roles). This stage can be deployed in parallel with stage `02a-nsxt`.
 
-### 03-vms
+### 03-
 This stage contains the Terraform content for deploying VMs into vCenter.
 
 ### 04-network-integrations
@@ -69,37 +69,3 @@ The stages and examples in this repository use modules in the `modules` director
  * [GCVE Service Networking](./modules/gcve-service-networking)
  * [NSX-T Distributed Firewall Manager](./modules/nsxt-distributed-firewall-manager)
  * [NSX-T Distributed Firewall Policy](./modules/nsxt-distributed-firewall-policy)
- * [NSX-T Gateway Firewall](./modules/nsxt-gateway-firewall)
- * [NSX-T Load Balancer Pools](./modules/nsxt-load-balancer-pool)
- * [NSX-T Load Balancer Service](./modules/nsxt-load-balancer-service)
- * [NSX-T Load Balancer Virtual Server](./modules/nsxt-load-balancer-virtual-server)
- * [NSX-T Policy Group](./modules/nsxt-policy-group)
- * [NSX-T Segment](./modules/nsxt-segment)
- * [NSX-T Tier1 Gateway](./modules/nsxt-tier1-gateway)
- * [vCenter Folder](./modules/vcenter-folder)
- * [vCenter Resource Pool](./modules/vcenter-resource-pool)
- * [vCenter Role](./modules/vcenter-role)
- * [vCenter Tag Factory](./modules/vcenter-tag-factory)
- * [vCenter VM](./modules/vcenter-vm)
-
-## Examples
-
-The example directory contains sample code to deploy individual modules. For each example there is a directory where the variables are passed as `tfvars` file and as a `yaml` file. The following examples are available in the `examples` directory:
-
- * [GCVE Monitoring](./examples/gcve-monitoring)
- * [GCVE Private Cloud](./examples/gcve-private-cloud)
- * [GCVE Service Networking](./examples/gcve-service-networking)
- * [NSX-T Distributed Firewall Manager](./examples/nsxt-distributed-firewall-manager)
- * [NSX-T Distributed Firewall Policy](./examples/nsxt-distributed-firewall-policy)
- * [NSX-T Gateway Firewall](./examples/nsxt-gateway-firewall)
- * [NSX-T Load Balancer Pools](./examples/nsxt-load-balancer-pool)
- * [NSX-T Load Balancer Service](./examples/nsxt-load-balancer-service)
- * [NSX-T Load Balancer Virtual Server](./examples/nsxt-load-balancer-virtual-server)
- * [NSX-T Policy Group](./examples/nsxt-policy-group)
- * [NSX-T Segment](./examples/nsxt-segment)
- * [NSX-T Tier1 Gateway](./examples/nsxt-tier1-gateway)
- * [vCenter Folder](./examples/vcenter-folder)
- * [vCenter Resource Pool](./examples/vcenter-resource-pool)
- * [vCenter Role](./examples/vcenter-role)
- * [vCenter Tag Factory](./examples/vcenter-tag-factory)
- * [vCenter VM](./examples/vcenter-vm)
