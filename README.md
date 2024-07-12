@@ -16,11 +16,6 @@ This is not an officially supported Google product. This code is intended to hel
 
 The repository has the following structure
 ```
-├── examples
-│   ├── nsxt-gateway-firewall
-│   ├── nsxt-load-balancer-pool
-│   ├── nsxt-load-balancer-service
-│   ├── ...
 ├── modules
 │   ├── nsxt-gateway-firewall
 │   ├── nsxt-load-balancer-pool
