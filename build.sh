@@ -34,8 +34,9 @@ gcloud services enable cloudresourcemanager.googleapis.com \
   cloudbilling.googleapis.com \
   vmwareengine.googleapis.com
 
-# Change to project folder to update variables
+echo "Change to project folder and copy template to update variables"
 cd stages/01-privatecloud/project-create/
+cp terraform.tfvars.example terraform.tfvars
 
 # Prompt the user to enter variables
 read -p "Enter a Project ID: " project_id

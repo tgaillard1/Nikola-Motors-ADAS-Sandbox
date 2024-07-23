@@ -1,4 +1,4 @@
-# U-Haul POC Private Cloud
+# Nikola Motors ADAS Reference Architecture-Private Cloud
 
 ## Private Cloud Deployment
 
