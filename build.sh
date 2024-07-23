@@ -33,3 +33,37 @@ gcloud services enable cloudresourcemanager.googleapis.com \
   serviceusage.googleapis.com \
   cloudbilling.googleapis.com \
   vmwareengine.googleapis.com
+
+# Change to project folder to update variables
+cd stages/01-privatecloud/project-create/
+
+# Prompt the user to enter variables
+read -p "Enter a Project ID: " project_id
+read -p "Enter a Billind ID:" billing_id
+
+# Check if terraform.tfvars exists
+if [ ! -f "terraform.tfvars" ]; then
+    echo "File 'terraform.tfvars' not found. Creating a new one."
+    echo "project=\"$project_id\"" > terraform.tfvars
+    echo "billing_id=\"$billing_id\"" >> terraform.tfvars
+    echo "File 'terraform.tfvars' created and updated successfully."
+    exit 0
+fi
+
+# Read existing variables from terraform.tfvars
+while IFS='=' read -r key value; do
+    if [ "$key" == "project" ]; then
+        value=\"$project_id\"  # Update project id if found
+    elif [ "$key" == "billing_id" ]; then
+    value=\"$billing_id\" 
+    fi 
+    variables+=("$key=$value")  # Store key-value pair
+done < terraform.tfvars
+
+# Write updated variables back to terraform.tfvars
+printf '%s\n' "${variables[@]}" > terraform.tfvars
+
+echo "File 'terraform.tfvars' updated successfully."
+
+terraform init
+terraform apply
