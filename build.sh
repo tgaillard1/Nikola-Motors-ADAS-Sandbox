@@ -22,7 +22,7 @@ fi
 
 #Enable core project API's
 
-echo "Enabling core pooject API's for project creation..."
+echo "Enabling core project API's for project creation..."
 
 gcloud services enable cloudresourcemanager.googleapis.com \
   compute.googleapis.com \
@@ -31,8 +31,7 @@ gcloud services enable cloudresourcemanager.googleapis.com \
   monitoring.googleapis.com \
   logging.googleapis.com \
   serviceusage.googleapis.com \
-  cloudbilling.googleapis.com \
-  vmwareengine.googleapis.com
+  cloudbilling.googleapis.com 
 
 echo "Change to project folder and copy template to update variables"
 cd stages/01-privatecloud/project-create/
@@ -40,7 +39,7 @@ cp terraform.tfvars.example terraform.tfvars
 
 # Prompt the user to enter variables
 read -p "Enter a Project ID: " project_id
-read -p "Enter a Billind ID:" billing_id
+read -p "Enter a Billing ID:" billing_id
 
 # Check if terraform.tfvars exists
 if [ ! -f "terraform.tfvars" ]; then
@@ -66,5 +65,26 @@ printf '%s\n' "${variables[@]}" > terraform.tfvars
 
 echo "File 'terraform.tfvars' updated successfully."
 
-terraform init
-terraform apply
+# terraform init
+# terraform apply
+
+echo "Change to new project -- $project_id"
+# gcloud config set project $project_id
+
+echo "Changing directories to create new services and network"
+cd ../01a-privatecloud/
+
+echo "Enabling new project API's to create services ..."
+gcloud services enable \
+compute.googleapis.com \
+iam.googleapis.com \
+cloudresourcemanager.googleapis.com \
+iamcredentials.googleapis.com \
+monitoring.googleapis.com \
+logging.googleapis.com \
+serviceusage.googleapis.com \
+cloudbilling.googleapis.com \
+datafusion.googleapis.com
+
+cp terraform.tfvars.example terraform.tfvars
+
