@@ -40,15 +40,17 @@ cp terraform.tfvars.example terraform.tfvars
 # Prompt the user to enter variables
 read -p "Enter a Project ID: " project_id
 read -p "Enter a Billing ID:" billing_id
+read -p "Endter base CIDR range, e.g., 10.10.0.0/22:" basecidrrange
+read -p "Endter private cloud CIDR range, e.g., 10.0.0.0/22:" mypccidrrange
 
 # Check if terraform.tfvars exists
-if [ ! -f "terraform.tfvars" ]; then
-    echo "File 'terraform.tfvars' not found. Creating a new one."
-    echo "project=\"$project_id\"" > terraform.tfvars
-    echo "billing_id=\"$billing_id\"" >> terraform.tfvars
-    echo "File 'terraform.tfvars' created and updated successfully."
-    exit 0
-fi
+# if [ ! -f "terraform.tfvars" ]; then
+#     echo "File 'terraform.tfvars' not found. Creating a new one."
+#     echo "project=\"$project_id\"" > terraform.tfvars
+#      echo "billing_id=\"$billing_id\"" >> terraform.tfvars
+#    echo "File 'terraform.tfvars' created and updated successfully."
+#    exit 0
+# fi
 
 # Read existing variables from terraform.tfvars
 while IFS='=' read -r key value; do
@@ -65,11 +67,11 @@ printf '%s\n' "${variables[@]}" > terraform.tfvars
 
 echo "File 'terraform.tfvars' updated successfully."
 
-# terraform init
-# terraform apply
+terraform init
+terraform apply
 
 echo "Change to new project -- $project_id"
-# gcloud config set project $project_id
+gcloud config set project $project_id
 
 echo "Changing directories to create new services and network"
 cd ../01a-privatecloud/
@@ -86,5 +88,11 @@ serviceusage.googleapis.com \
 cloudbilling.googleapis.com \
 datafusion.googleapis.com
 
-cp terraform.tfvars.example terraform.tfvars
+# Create network
+echo "Create the VPC for sandox environment"
+
+gcloud compute networks create nikola-sandbox-network --subnet-mode=custom
+
+terraform init
+terraform apply
 
