@@ -40,8 +40,8 @@ cp terraform.tfvars.example terraform.tfvars
 # Prompt the user to enter variables
 read -p "Enter a Project ID: " project_id
 read -p "Enter a Billing ID:" billing_id
-read -p "Endter base CIDR range, e.g., 10.10.0.0/22:" basecidrrange
-read -p "Endter private cloud CIDR range, e.g., 10.0.0.0/22:" mypccidrrange
+# read -p "Endter base CIDR range, e.g., 10.10.0.0/22:" basecidrrange
+# read -p "Endter private cloud CIDR range, e.g., 10.0.0.0/22:" mypccidrrange
 
 # Check if terraform.tfvars exists
 # if [ ! -f "terraform.tfvars" ]; then
@@ -67,8 +67,8 @@ printf '%s\n' "${variables[@]}" > terraform.tfvars
 
 echo "File 'terraform.tfvars' updated successfully."
 
-# terraform init
-# terraform apply
+terraform init
+terraform apply
 
 echo "Change to new project -- $project_id"
 gcloud config set project $project_id
@@ -112,6 +112,6 @@ echo "File 'variables.tf' for data fustion updated successfully."
 # Create data fusion
 echo "Create data fusion environment"
 
-# terraform init
-# terraform apply
+terraform init
+terraform apply
 
