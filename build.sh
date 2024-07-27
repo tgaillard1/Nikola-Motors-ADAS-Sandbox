@@ -74,7 +74,7 @@ echo "Change to new project -- $project_id"
 gcloud config set project $project_id
 
 echo "Changing directories to create new services and network"
-cd ../../../modules/terraform-google-data-fusion/
+cd ../../../modules/google-data-fusion/
 
 echo "Enabling new project API's to create services ..."
 gcloud services enable \
@@ -92,6 +92,22 @@ datafusion.googleapis.com
 echo "Create the VPC for sandox environment"
 
 gcloud compute networks create nikola-sandbox-network --subnet-mode=custom
+
+cp variables.tf.example variables.tf
+
+# Read existing variables from variables.tf
+while IFS='=' read -r key value; do
+    if [ "$key" == "project" ]; then
+        value=\"$project_id\"  # Update project id if found
+    fi
+    variables+=("$key=$value")  # Store key-value pair
+done < variables.tf
+printf '%s\n' "${variables[@]}" > variables.tf
+
+echo "File 'variables.tf' for data fustion updated successfully."
+
+# Create data fusion
+echo "Create data fusion environment"
 
 terraform init
 terraform apply
