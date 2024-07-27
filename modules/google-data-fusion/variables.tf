@@ -22,6 +22,7 @@ variable "name" {
 variable "project" {
   description = "The project ID to deploy to."
   type        = string
+  default     = "tg2024-07-24"
 }
 
 variable "datafusion_version" {

@@ -67,8 +67,8 @@ printf '%s\n' "${variables[@]}" > terraform.tfvars
 
 echo "File 'terraform.tfvars' updated successfully."
 
-terraform init
-terraform apply
+# terraform init
+# terraform apply
 
 echo "Change to new project -- $project_id"
 gcloud config set project $project_id
@@ -96,19 +96,22 @@ gcloud compute networks create nikola-sandbox-network --subnet-mode=custom
 cp variables.tf.example variables.tf
 
 # Read existing variables from variables.tf
-while IFS='=' read -r key value; do
-    if [ "$key" == "project" ]; then
-        value=\"$project_id\"  # Update project id if found
-    fi
-    variables+=("$key=$value")  # Store key-value pair
-done < variables.tf
-printf '%s\n' "${variables[@]}" > variables.tf
+# Find the line in variables.tf that contains "project_id"
+line_number=$(grep -n 'project_id' variables.tf | cut -d: -f1)
+
+# If the line is found, replace the existing value with the new one
+if [ -n "$line_number" ]; then
+  grep -q 'project_id' variables.tf && sed -i "s/project_id/$project_id/g" variables.tf
+  echo "Successfully updated project_id in variables.tf"
+else
+  echo "project_id not found in variables.tf"
+fi
 
 echo "File 'variables.tf' for data fustion updated successfully."
 
 # Create data fusion
 echo "Create data fusion environment"
 
-terraform init
-terraform apply
+# terraform init
+# terraform apply
 
