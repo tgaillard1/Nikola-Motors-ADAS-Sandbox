@@ -68,7 +68,7 @@ printf '%s\n' "${variables[@]}" > terraform.tfvars
 echo "File 'terraform.tfvars' updated successfully."
 
 terraform init
-terraform apply
+yes | terraform apply
 
 echo "Change to new project -- $project_id"
 gcloud config set project $project_id
@@ -86,12 +86,19 @@ monitoring.googleapis.com \
 logging.googleapis.com \
 serviceusage.googleapis.com \
 cloudbilling.googleapis.com \
+container.googleapis.com \
 datafusion.googleapis.com
 
 # Create network
 echo "Create the VPC for sandox environment"
 
 gcloud compute networks create nikola-sandbox-network --subnet-mode=custom
+
+gcloud compute networks subnets create gke-subnet \
+    --network=nikola-sandbox-network \
+    --range=10.0.0.0/24 \
+    --region=us-central1
+
 
 cp variables.tf.example variables.tf
 
@@ -113,5 +120,42 @@ echo "File 'variables.tf' for data fustion updated successfully."
 echo "Create data fusion environment"
 
 terraform init
-terraform apply
+yes | terraform apply
+
+# Peer two networks
+echo "Peer data fusion and sandbox network"
+gcloud compute networks peerings create peer-data-fusion-with-nikola-sandbox-network \
+    --network=nikola-sandbox-network \
+    --peer-project=$project_id \
+    --peer-network=adas-data-fusion-network
+
+# Create K8 clusters
+echo "creating K8 ADAS clusters"
+
+gcloud container clusters create nikola-gke-adas-ai-enabled \
+    --addons GcsFuseCsiDriver \
+    --location=us-central1 \
+    --num-nodes=1 \
+    --network=nikola-sandbox-network \
+    --subnetwork=gke-subnet \
+    --enable-private-endpoint \
+    --enable-private-nodes \
+    --enable-ip-alias \
+    --shielded-secure-boot \
+    --shielded-integrity-monitoring \
+    --enable-shielded-nodes \
+    --workload-pool="${project_id}.svc.id.goog"
+
+gcloud container node-pools create nikola-gpu-pool \
+    --accelerator=type=nvidia-tesla-t4,count=1,gpu-driver-version=default \
+    --machine-type=n1-standard-16 --num-nodes=1 \
+    --location=us-central1 \
+    --shielded-secure-boot \
+    --shielded-integrity-monitoring \
+    --enable-private-nodes \
+    --cluster=nikola-gke-adas-ai-enabled
+
+# Create bucket for images/files
+echo "creating a GCS bucke..."
+gsutil mb gs://nikola-sandbox-$(date +'%Y-%m-%d-%H-%M-%S')-adas-bucket
 
