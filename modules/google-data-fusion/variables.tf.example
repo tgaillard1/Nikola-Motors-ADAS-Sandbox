@@ -17,11 +17,13 @@
 variable "name" {
   description = "Name of the instance."
   type        = string
+  default     = "adas-data-fusion"
 }
 
 variable "project" {
   description = "The project ID to deploy to."
   type        = string
+  default     = "project_id"
 }
 
 variable "datafusion_version" {
@@ -33,6 +35,7 @@ variable "datafusion_version" {
 variable "network" {
   description = "Name for VPC to create or reuse to be configured for use with private Data Fusion instance."
   type        = string
+  default     = "adas-data-fusion-network"
 }
 
 variable "dataproc_subnet" {
@@ -50,6 +53,7 @@ variable "description" {
 variable "region" {
   description = "The region of the instance."
   type        = string
+  default     = "us-central1"
 }
 
 variable "type" {
