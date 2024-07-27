@@ -74,7 +74,7 @@ echo "Change to new project -- $project_id"
 gcloud config set project $project_id
 
 echo "Changing directories to create new services and network"
-cd ../01a-privatecloud/
+cd ../../../modules/terraform-google-data-fusion/
 
 echo "Enabling new project API's to create services ..."
 gcloud services enable \
