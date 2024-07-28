@@ -1,6 +1,6 @@
 # Nikola-Motors Google Cloud ADAS Reference Architecture
 
-For the POC deployment you should only have to deploy the first three stages of this repo; project-create, 01a-privatecloud & 01b-network-peering. This will deploy the reference architecture below with only the VPN connection connection remaining.  To begin go to [project-create](./stages/01-privatecloud/project-create). 
+This repository has a build script that will deploy all elements of a reference ADAS architecture to support your training and operational needs.  
 
 <img src="https://github.com/tgaillard1/Nikola-Motors-ADAS-Sandbox/blob/main/docs/NikolaMotors-Sandbox-RA.png" alt="ADAS Architecture"/>
 
