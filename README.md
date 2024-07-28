@@ -4,6 +4,29 @@ This repository has a build script that will deploy all elements of a reference 
 
 <img src="https://github.com/tgaillard1/Nikola-Motors-ADAS-Sandbox/blob/main/docs/NikolaMotors-Sandbox-RA.png" alt="ADAS Architecture"/>
 
+## Private Cloud Deployment
+
+Follow the steps below:
+ * Log into your [Google Cloud Console](https://accounts.google.com/) (GCP)
+ p Open Cloud Shell (select the square icon <img src="https://github.com/tgaillard1/Nikola-Motors-ADAS-Sandbox/blob/main/docs/cloud-shell.png" alt="Cloud Shell Icon"/> in the top right of the console)
+ * Validate what project you are in on GCP.  An existing project for Nikola -->  prj-rp-Engineering can be used.  If needed run this command to change to an active project, e.g., --> gcloud config set project prj-rp-Enginerring
+   
+     * Clone git directory into the cloud shell
+    
+        ```
+        git clone https://github.com/tgaillard1/Nikola-Motors-ADAS-Sandbox.git
+        ```
+     * Change directories to the --> Nikola-Motors-ADAS-Sandbox
+    
+        ```
+        cd ~/Nikola-Motors-ADAS-Sandbox
+        ```
+     * Run the script --> build.sh
+
+        ```
+        ./build.sh
+        ```
+
 # Google Cloud ADAS Foundation
 
 This repository contains Terraform code to deploy a sample Terraform foundation for a reference architecture for ADAS. In this repository you can find Terraform modules, deployment examples as well as a set of deployment stages to set up you foundational infrastructure.
