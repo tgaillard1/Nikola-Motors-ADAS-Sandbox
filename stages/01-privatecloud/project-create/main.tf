@@ -15,7 +15,7 @@
  */
 
 # Google Cloud project
-resource "google_project" "uhaul-project" {
+resource "google_project" "nikola-project" {
   project_id = var.project
   name       = var.project
   auto_create_network = false

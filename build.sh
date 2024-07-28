@@ -43,14 +43,14 @@ read -p "Enter a Billing ID:" billing_id
 # read -p "Endter base CIDR range, e.g., 10.10.0.0/22:" basecidrrange
 # read -p "Endter private cloud CIDR range, e.g., 10.0.0.0/22:" mypccidrrange
 
-# Check if terraform.tfvars exists
-# if [ ! -f "terraform.tfvars" ]; then
-#     echo "File 'terraform.tfvars' not found. Creating a new one."
-#     echo "project=\"$project_id\"" > terraform.tfvars
-#      echo "billing_id=\"$billing_id\"" >> terraform.tfvars
-#    echo "File 'terraform.tfvars' created and updated successfully."
-#    exit 0
-# fi
+Check if terraform.tfvars exists
+if [ ! -f "terraform.tfvars" ]; then
+    echo "File 'terraform.tfvars' not found. Creating a new one."
+    echo "project=\"$project_id\"" > terraform.tfvars
+    echo "billing_id=\"$billing_id\"" >> terraform.tfvars
+    echo "File 'terraform.tfvars' created and updated successfully."
+    exit 0
+fi
 
 # Read existing variables from terraform.tfvars
 while IFS='=' read -r key value; do
@@ -68,7 +68,16 @@ printf '%s\n' "${variables[@]}" > terraform.tfvars
 echo "File 'terraform.tfvars' updated successfully."
 
 terraform init
-yes | terraform apply
+# Pipe the output of 'yes' to terraform apply
+# Echo 'yes' to standard output
+echo "yes" | terraform apply
+
+# Check the exit status of terraform apply
+if [ $? -eq 0 ]; then
+  echo "Terraform apply completed successfully!"
+else
+  echo "Terraform apply encountered an error. Please check the output for details."
+fi
 
 echo "Change to new project -- $project_id"
 gcloud config set project $project_id
@@ -120,7 +129,16 @@ echo "File 'variables.tf' for data fustion updated successfully."
 echo "Create data fusion environment"
 
 terraform init
-yes | terraform apply
+# Pipe the output of 'yes' to terraform apply
+# Echo 'yes' to standard output
+echo "yes" | terraform apply
+
+# Check the exit status of terraform apply
+if [ $? -eq 0 ]; then
+  echo "Terraform apply completed successfully!"
+else
+  echo "Terraform apply encountered an error. Please check the output for details."
+fi
 
 # Peer two networks
 echo "Peer data fusion and sandbox network"
