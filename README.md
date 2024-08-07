@@ -2,7 +2,7 @@
 
 This repository has a build script that will deploy all elements of a reference ADAS architecture to support your training and operational needs.  
 
-<img src="https://github.com/tgaillard1/Nikola-Motors-ADAS-Sandbox/blob/main/docs/NikolaMotors-Sandbox-RA.png" alt="ADAS Architecture"/>
+<img src="https://github.com/tgaillard1/Nikola-Motors-ADAS-Sandbox/blob/main/docs/NikolaMotors-Sandbox-RA1.png" alt="ADAS Architecture"/>
 
 ## Private Cloud Deployment
 
